@@ -1,0 +1,26 @@
+DESCRIPTION:calculate mu_RS
+
+[LONGITUDINAL]
+input = {mu_RS}
+
+
+EQUATION:
+;define some known parameters
+g = 0.4  ;cell growth rate, 1/day
+N = 5000
+F = 0.098
+
+;initial condition
+t_0 = 0
+S_0 = F*N
+R_0 = (1-F)*N
+
+;ODE
+ddt_S = g*S + mu_RS*R 
+ddt_R = g*R - mu_RS*R 
+
+;S fraction
+frac = S/(R+S)
+
+OUTPUT: 
+output = {frac}
