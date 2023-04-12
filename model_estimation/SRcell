@@ -1,0 +1,25 @@
+DESCRIPTION:S and R growth model
+
+[LONGITUDINAL]
+input = {mu_SR, ds,dr,k, F}
+F = {use=regressor}
+
+EQUATION:
+;define some known parameters
+N = 5000  ;initial cell number
+g = 0.4  ;cell growth rate, 1/day
+
+;initial condition
+t_0 = 0
+S_0 = F*N
+R_0 = (1-F)*N
+
+;ODE
+ddt_S = g*S - mu_SR*S - ds*exp(-k*t)*S
+ddt_R = g*R + mu_SR*S -dr*exp(-k*t)*R
+
+;ADCC viability
+V = 100*(S+R)/(N*exp(g*t))
+
+OUTPUT: 
+output = {V}
