@@ -1,0 +1,51 @@
+<DATAFILE>
+
+[FILEINFO]
+file='data.csv'
+delimiter = comma
+header = {ID, TIME, DV}
+
+[CONTENT]
+ID = {use=identifier}
+TIME = {use=time}
+DV = {use=observation, name=DV, type=continuous}
+
+<MODEL>
+
+[INDIVIDUAL]
+input = mu_RS_pop
+
+DEFINITION:
+mu_RS = {distribution=logNormal, typical=mu_RS_pop, no-variability}
+
+[LONGITUDINAL]
+input = {a, b}
+
+file = 'muRS.txt'
+
+DEFINITION:
+DV = {distribution=normal, prediction=frac, errorModel=combined1(a, b)}
+
+<FIT>
+data = DV
+model = DV
+
+<PARAMETER>
+a = {value=1, method=MLE}
+b = {value=0.3, method=MLE}
+c = {value=1, method=FIXED}
+mu_RS_pop = {value=0.0001, method=MLE}
+
+<MONOLIX>
+
+[TASKS]
+populationParameters()
+individualParameters(method = {conditionalMean, conditionalMode })
+fim(run = false,method = StochasticApproximation)
+logLikelihood(run = false,method = ImportanceSampling)
+plotResult(method = {indfits, obspred, vpc, parameterdistribution, covariatemodeldiagnosis, randomeffects, covariancemodeldiagnosis, residualsscatter, residualsdistribution, saemresults })
+
+[SETTINGS]
+GLOBAL:
+exportpath = 'mRS'
+
