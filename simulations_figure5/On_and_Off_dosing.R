@@ -98,7 +98,7 @@ p1 <- results2 %>%gather(variable,value,-time2, -cycle, -time, -N) %>%
   ggplot(aes(x=time2,y=value,color=variable))+
   geom_line(size=1)+
   theme_classic()+
-  scale_y_continuous(trans='log10')+
+  scale_y_continuous(trans='log10', limits=c(1e2, 1e20))+
   labs(x='Time (day)',y='Cell number')+ggtitle('ON 3 days + OFF 3 days')
 ggsave(p1, file='on3off3.tiff', width=4, height=2)
 
@@ -139,7 +139,7 @@ p2 <- results2 %>%gather(variable,value,-time2, -cycle, -time, -N) %>%
   ggplot(aes(x=time2,y=value,color=variable))+
   geom_line(size=1)+
   theme_classic()+
-  scale_y_continuous(trans='log10')+
+  scale_y_continuous(trans='log10', limits=c(1e2, 1e20))+
  labs(x='Time (day)',y='Cell number')+ggtitle('ON 3 days + OFF 5 days')
 ggsave(p2, file='on3off5.tiff', width=4, height=2)
 
@@ -181,7 +181,7 @@ p3 <- results2 %>%gather(variable,value,-time2, -cycle, -time, -N) %>%
   ggplot(aes(x=time2,y=value,color=variable))+
   geom_line(size=1)+
   theme_classic()+
-  scale_y_continuous(trans='log10')+
+  scale_y_continuous(trans='log10', limits=c(1e2, 1e20))+
   scale_x_continuous(breaks = c(0,25,50,75,100,125),labels = c(0,25,50,75,100,125),lim = c(0,125))+
   labs(x='Time (day)',y='Cell number')+ggtitle('ON 3 days + OFF 10 days')
 ggsave(p3, file='on3off10.tiff', width=4, height=2)
@@ -198,7 +198,7 @@ p5 <- ggplot(con)+
   geom_line(data=on3off3, aes(x=time2, y=N, col='ON 3 days + OFF 3 days'), size=1)+
   geom_line(data=on3off5, aes(x=time2, y=N, col='ON 3 days + OFF 5 days'), size=1)+
   geom_line(data=on3off10, aes(x=time2, y=N, col='ON 3 days + OFF 10 days'), size=1)+
-  scale_y_continuous(trans='log10')+
+  scale_y_continuous(trans='log10', limits=c(1e2, 1e20))+
   scale_x_continuous(breaks = c(0,25,50,75,100,125),labels = c(0,25,50,75,100,125),lim = c(0,125))+
   labs(x='Time (day)', y='Total cell number', title='Total = R + S')+
   scale_colour_manual("Dosing Strategy", breaks = c("Continuous", 
@@ -211,3 +211,4 @@ p5 <- ggplot(con)+
                                               "ON 3 days + OFF 10 days" = "deepskyblue1"))+
   theme_classic()
 ggsave(p5, file='total.tiff', width=8, height=3)
+
