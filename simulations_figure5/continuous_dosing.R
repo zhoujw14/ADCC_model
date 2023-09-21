@@ -76,7 +76,8 @@ for (i in 1:40) {
 }
 
 results2 <- results %>%
-  mutate(time2 = 3*(iteration-1)+time)
+  mutate(time2 = 3*(iteration-1)+time)%>%
+  mutate(S =  ifelse(S<=1, 1, S)) 
 
 
 #plot
@@ -84,7 +85,7 @@ p1 <- results2 %>%gather(variable,value,-time2, -iteration, -time, -Total) %>%
   ggplot(aes(x=time2,y=value,color=variable))+
   geom_line(size=1.5)+
   theme_classic()+
-  scale_y_continuous(trans='log10')+
+  scale_y_continuous(trans='log10',limits=c(1e0, 1e20))+
   labs(x='Time (day)',y='Cell number')+ggtitle('Continuous Dosing')
 
 
