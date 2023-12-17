@@ -1,8 +1,10 @@
 # project: ADCC
 # Author: Jiawei Zhou
 # Objectives: simulate R and S and R+S under on/off treatment
+# Updated model
 
 rm(list=ls())
+
 
 library(plyr)
 library(dplyr)
@@ -57,7 +59,7 @@ rest.model <- function(t,x,params){
 }
 
 # params
-parms <- c(g = 0.4, mu_SR = 4.3e-5, mu_RS = 0.0014, ds = 6.03, dr = 3.51, k=2.48, w=0.025)
+parms <- c(g = 0.4, mu_SR = 0.347, mu_RS = 0.0014, ds = 5, dr = 4.26, k=2.67, w=0.028)
 N <- 5000
 f <- 0.239
 # Set up empty data frame to store results
@@ -140,7 +142,7 @@ p2 <- results2 %>%gather(variable,value,-time2, -cycle, -time, -N) %>%
   geom_line(size=1)+
   theme_classic()+
   scale_y_continuous(trans='log10', limits=c(1e2, 1e20))+
- labs(x='Time (day)',y='Cell number')+ggtitle('ON 3 days + OFF 5 days')
+  labs(x='Time (day)',y='Cell number')+ggtitle('ON 3 days + OFF 5 days')
 ggsave(p2, file='on3off5.tiff', width=4, height=2)
 
 
@@ -202,13 +204,13 @@ p5 <- ggplot(con)+
   scale_x_continuous(breaks = c(0,25,50,75,100,125),labels = c(0,25,50,75,100,125),lim = c(0,125))+
   labs(x='Time (day)', y='Total cell number', title='Total = R + S')+
   scale_colour_manual("Dosing Strategy", breaks = c("Continuous", 
-                                              "ON 3 days + OFF 3 days",
-                                              "ON 3 days + OFF 5 days" ,
-                                              "ON 3 days + OFF 10 days"),
+                                                    "ON 3 days + OFF 3 days",
+                                                    "ON 3 days + OFF 5 days" ,
+                                                    "ON 3 days + OFF 10 days"),
                       values = c("Continuous" = "red", 
-                                              "ON 3 days + OFF 3 days" = "dodgerblue4",
-                                              "ON 3 days + OFF 5 days" = "dodgerblue2",
-                                              "ON 3 days + OFF 10 days" = "deepskyblue1"))+
+                                 "ON 3 days + OFF 3 days" = "dodgerblue4",
+                                 "ON 3 days + OFF 5 days" = "dodgerblue2",
+                                 "ON 3 days + OFF 10 days" = "deepskyblue1"))+
   theme_classic()
 ggsave(p5, file='total.tiff', width=8, height=3)
 
