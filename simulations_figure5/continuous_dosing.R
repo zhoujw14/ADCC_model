@@ -1,8 +1,10 @@
 # project: ADCC
 # Author: Jiawei Zhou
 # Objectives: simulate R and S and R+S under different dosing regimen
+# Updated Model
 
 rm(list=ls())
+
 
 library(plyr)
 library(dplyr)
@@ -54,7 +56,7 @@ results <- data.frame()
 # Loop through simulation 10 times
 for (i in 1:40) {
   #set up parameters
-  parms <- c(g = 0.4, mu_SR = 4.3e-5, ds = 6.03, dr = 3.51, k=2.48, w=0.025, n=i)
+  parms <- c(g = 0.4, mu_SR = 0.347, ds = 5, dr = 4.26, k=2.67, w=0.028, n=i)
   # Set up initial conditions
   if (i == 1) {
     xstart <- c(S = f*N, R = (1-f)*N)
