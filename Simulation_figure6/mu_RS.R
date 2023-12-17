@@ -364,4 +364,4 @@ p6 <- ggplot(on3off5)+
   theme_classic()+
   scale_x_continuous(trans='log10')+scale_y_continuous(trans='log10')+
   labs(x=expression("Fold on "~mu*"_RS"),y='Total cell number', title=expression("Reversibility "~mu*"_RS"))
-ggsave(p6, file='result/muRS_on3off5_on3off3.tiff', width=5, height=2)
+ggsave(p6, file='result/muRS_on3off5_on3off10.tiff', width=5, height=2)
