@@ -1,8 +1,11 @@
+
 # project: ADCC
 # Author: Jiawei Zhou
 # Objectives: figure 6
+# Updated model
 
 rm(list=ls())
+
 
 
 library(plyr)
@@ -58,7 +61,7 @@ for (kk in 1:length(fold)){
   # Loop through simulation 40 times
   for (i in 1:40) {
     #set up parameters
-    parms <- c(g = 0.4, mu_SR = 4.3e-5, ds = 6.03, dr = 3.51, k=2.48, w=0.025, n=i)
+    parms <- c(g = 0.4, mu_SR = 0.347, ds = 5, dr = 4.26, k=2.67, w=0.028, n=i)
     # Set up initial conditions
     if (i == 1) {
       xstart <- c(S = f*N, R = (1-f)*N)
@@ -89,7 +92,7 @@ con <- data.frame(
   fold_w =  fold,
   total = total.con
 )
-#write.csv(con, file='con_muRS.csv', quote=FALSE, row.names=FALSE)
+
 
 # generate on 3 days off 3 days
 
@@ -144,7 +147,7 @@ total.on3off3 <- c()
 for(kk in 1:length(fold)){
   
   tmp.muRS <- fold[kk]*0.0014
-  parms <- c(g = 0.4, mu_SR = 4.3e-5, mu_RS = tmp.muRS, ds = 6.03, dr = 3.51, k=2.48, w=0.025)
+  parms <- c(g = 0.4, mu_SR = 0.347, mu_RS = tmp.muRS, ds = 5, dr = 4.26, k=2.67, w=0.028)
   N <- 5000
   f <- 0.239
   # Set up empty data frame to store results
@@ -197,7 +200,7 @@ p1 <- ggplot(con)+
   theme_classic()+
   scale_x_continuous(trans='log10')+scale_y_continuous(trans='log10')+
   labs(x=expression("Fold on "~mu*"_RS"),y='Total cell number', title=expression("Reversibility "~mu*"_RS"))
-ggsave(p1, file='muRS_on3off3_con.tiff', width=5, height=2)
+ggsave(p1, file='result/muRS_on3off3_con.tiff', width=5, height=2)
 
 
 # on 3 off 10
@@ -209,7 +212,7 @@ total.on3off10 <- c()
 for(kk in 1:length(fold)){
   
   tmp.muRS <- fold[kk]*0.0014
-  parms <- c(g = 0.4, mu_SR = 4.3e-5, mu_RS = tmp.muRS, ds = 6.03, dr = 3.51, k=2.48, w=0.025)
+  parms <- c(g = 0.4, mu_SR = 0.347, mu_RS = tmp.muRS, ds = 5, dr = 4.26, k=2.67, w=0.028)
   N <- 5000
   f <- 0.239
   out <- data.frame()
@@ -248,7 +251,7 @@ on3off10 <- data.frame(
   fold_w =  fold,
   total = total.on3off10
 )
-#write.csv(on3off10, file='on3off10_muRS.csv', quote=FALSE, row.names=FALSE)
+
 
 p2 <- ggplot(on3off3)+
   geom_line(aes(x=fold_w, y=total, col='ON 3 days + OFF 3 days'), size=1.5)+
@@ -260,7 +263,7 @@ p2 <- ggplot(on3off3)+
   theme_classic()+
   scale_x_continuous(trans='log10')+scale_y_continuous(trans='log10')+
   labs(x=expression("Fold on "~mu*"_RS"),y='Total cell number', title=expression("Reversibility "~mu*"_RS"))
-ggsave(p2, file='muRS_on3off10_on3off3.tiff', width=5, height=2)
+ggsave(p2, file='result/muRS_on3off10_on3off3.tiff', width=5, height=2)
 
 p3 <- ggplot(con)+
   geom_line(aes(x=fold_w, y=total, col='Continuous'), size=1.5)+
@@ -272,7 +275,7 @@ p3 <- ggplot(con)+
   theme_classic()+
   scale_x_continuous(trans='log10')+scale_y_continuous(trans='log10')+
   labs(x=expression("Fold on "~mu*"_RS"),y='Total cell number', title=expression("Reversibility "~mu*"_RS"))
-ggsave(p3, file='muRS_on3off10_con.tiff', width=5, height=2)
+ggsave(p3, file='result/muRS_on3off10_con.tiff', width=5, height=2)
 
 
 total.on3off5 <- c()
@@ -280,7 +283,7 @@ total.on3off5 <- c()
 for(kk in 1:length(fold)){
   
   tmp.muRS <- fold[kk]*0.0014
-  parms <- c(g = 0.4, mu_SR = 4.3e-5, mu_RS = tmp.muRS, ds = 6.03, dr = 3.51, k=2.48, w=0.025)
+  parms <- c(g = 0.4, mu_SR = 0.347, mu_RS = tmp.muRS, ds = 5, dr = 4.26, k=2.67, w=0.028)
   N <- 5000
   f <- 0.239
   
@@ -322,7 +325,7 @@ on3off5 <- data.frame(
   fold_w =  fold,
   total = total.on3off5
 )
-write.csv(on3off5, file='on3off5_muRS.csv', quote=FALSE, row.names=FALSE)
+
 
 
 p4 <- ggplot(on3off3)+
@@ -335,7 +338,7 @@ p4 <- ggplot(on3off3)+
   theme_classic()+
   scale_x_continuous(trans='log10')+scale_y_continuous(trans='log10')+
   labs(x=expression("Fold on "~mu*"_RS"),y='Total cell number', title=expression("Reversibility "~mu*"_RS"))
-ggsave(p4, file='muRS_on3off5_on3off3.tiff', width=5, height=2)
+ggsave(p4, file='result/muRS_on3off5_on3off3.tiff', width=5, height=2)
 
 p5 <- ggplot(con)+
   geom_line(aes(x=fold_w, y=total, col='Continuous'), size=1.5)+
@@ -347,7 +350,7 @@ p5 <- ggplot(con)+
   theme_classic()+
   scale_x_continuous(trans='log10')+scale_y_continuous(trans='log10')+
   labs(x=expression("Fold on "~mu*"_RS"),y='Total cell number', title=expression("Reversibility "~mu*"_RS"))
-ggsave(p5, file='muRS_on3off5_con.tiff', width=5, height=2)
+ggsave(p5, file='result/muRS_on3off5_con.tiff', width=5, height=2)
 
 
 
@@ -361,5 +364,4 @@ p6 <- ggplot(on3off5)+
   theme_classic()+
   scale_x_continuous(trans='log10')+scale_y_continuous(trans='log10')+
   labs(x=expression("Fold on "~mu*"_RS"),y='Total cell number', title=expression("Reversibility "~mu*"_RS"))
-ggsave(p6, file='muRS_on3off5_on3off3.tiff', width=5, height=2)
-
+ggsave(p6, file='result/muRS_on3off5_on3off3.tiff', width=5, height=2)
