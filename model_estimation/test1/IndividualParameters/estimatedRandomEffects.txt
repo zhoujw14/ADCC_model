@@ -1,0 +1,4 @@
+id,eta_mu_SR_SAEM,eta_ds_SAEM,eta_dr_SAEM,eta_k_SAEM,eta_mu_SR_mode,eta_ds_mode,eta_dr_mode,eta_k_mode,TYPE
+1,0,0,0,0,0,0,0,0,Parental
+2,0,0,0,0,0,0,0,0,R20
+3,0,0,0,0,0,0,0,0,W20

@@ -1,0 +1,70 @@
+<DATAFILE>
+
+[FILEINFO]
+file='data.csv'
+delimiter = comma
+header={ID, TIME, DV, F, TYPE}
+
+[CONTENT]
+ID = {use=identifier}
+TIME = {use=time}
+DV = {use=observation, type=continuous}
+F = {use=regressor}
+TYPE = {use=covariate, type=categorical}
+
+[SETTINGS]
+dataType = {'DV'=plasma}
+
+<MODEL>
+
+[COVARIATE]
+input = TYPE
+
+TYPE = {type=categorical, categories={'Parental', 'R20', 'W20'}}
+
+[INDIVIDUAL]
+input = {dr_pop, ds_pop, k_pop, mu_SR_pop, TYPE, beta_dr_TYPE_R20, beta_dr_TYPE_W20}
+
+TYPE = {type=categorical, categories={'Parental', 'R20', 'W20'}}
+
+DEFINITION:
+dr = {distribution=logNormal, typical=dr_pop, covariate=TYPE, coefficient={0, beta_dr_TYPE_R20, beta_dr_TYPE_W20}, no-variability}
+ds = {distribution=logNormal, typical=ds_pop, no-variability}
+k = {distribution=logNormal, typical=k_pop, no-variability}
+mu_SR = {distribution=logNormal, typical=mu_SR_pop, no-variability}
+
+[LONGITUDINAL]
+input = {b}
+
+file = 'SRcell.txt'
+
+DEFINITION:
+DV = {distribution=normal, prediction=V, errorModel=proportional(b)}
+
+<FIT>
+data = 'DV'
+model = DV
+
+<PARAMETER>
+b = {value=0.3, method=MLE}
+beta_dr_TYPE_R20 = {value=0, method=MLE}
+beta_dr_TYPE_W20 = {value=0, method=MLE}
+c = {value=1, method=FIXED}
+dr_pop = {value=1, method=MLE}
+ds_pop = {value=5, method=FIXED}
+k_pop = {value=1, method=MLE}
+mu_SR_pop = {value=0.01, method=MLE}
+
+<MONOLIX>
+
+[TASKS]
+populationParameters()
+individualParameters(method = {conditionalMean, conditionalMode })
+fim(method = StochasticApproximation)
+logLikelihood(method = ImportanceSampling)
+plotResult(method = {indfits, parameterdistribution, covariancemodeldiagnosis, covariatemodeldiagnosis, obspred, vpc, residualsscatter, residualsdistribution, randomeffects, saemresults })
+
+[SETTINGS]
+GLOBAL:
+exportpath = 'test1'
+
